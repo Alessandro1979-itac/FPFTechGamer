@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Matador de Monstro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/sweetalert2@7.12.15/dist/sweetalert2.all.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="panel scores" v-if="jogando">
+        <div class="score">
+          <h1>{{ jogador.nome }}</h1>
+          <div class="life-bar">
+            <div class="life" :class="{danger: jogador.vida < 20}"
+              :style="{width: (jogador.vida/personagens[jogador.id].vida*100) + '%'}">
+            </div>
+          </div>
+          <div>{{ jogador.vida }}%</div>
+
+          <div class="life-bar">
+            <div class="mana" :style="{width: (jogador.mana * 100/personagens[jogador.id].mana) + '%'}"></div>
+          </div>
+          <div>Mana: {{ jogador.mana }}</div>
+          <img
+            :src="jogador.img"
+            width="60"
+            height="90"
+            class="jogadorFloat" />
+        </div>
+
+        <div class="score">
+          <h1>{{ monstro.nome }}</h1>
+          <div class="life-bar">
+            <div class="life" :class="{danger: monstro.vida < 20}"
+              :style="{width: (monstro.vida/inimigos[monstro.id].vida*100) + '%'}">
+            </div>
+          </div>
+          <div>{{ monstro.vida }}%</div>
+
+          <div class="life-bar">
+            <div class="raiva" :style="{width: (monstro.raiva * 33) + '%'}"></div>
+          </div>
+          <div>Raiva: {{ monstro.raiva }}</div>
+          <img
+            :src="monstro.img"
+            width="60"
+            height="90"
+            class="monstroFloat" />
+        </div>
+      </div>
+
+      <div id="acoes" class="panel buttons">
+        <div v-if="!jogando">
+          <div class="personagens">
+            <div class="panel herois">
+              <h2>Hérois</h2>
+              <div class="personagem">
+                <div class="div-person" v-for="p in personagens"
+                  :class="{heroiescolhido: p.id == jogadorEscolhido}">
+                  <label>{{p.nome}}</label>
+                  <img
+                    :src="p.img"
+                    width="100"
+                    height="140"
+                    @click="escolherPersonagem(p.id)" />
+                  <div>
+                    <div class="icones"><img src="./assets/icon/forca.svg" class="icon forca" />{{p.forca}}</div>
+                    <div class="icones"><img src="./assets/icon/vida.svg" class="icon vida" />{{p.vida}}</div>
+                    <div class="icones"><img src="./assets/icon/mana.svg" class="icon mana" />{{p.mana}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel monstros">
+              <h2>Monstros</h2>
+              <div class="personagem">
+                <div class="div-person" v-for="m in inimigos" :class="{monstroescolhido: m.id == monstroEscolhido}">
+                  <label>{{m.nome}}</label>
+                  <img
+                    :src="m.img"
+                    width="100"
+                    height="140"
+                    @click="escolherInimigo(m.id)" />
+                  <div>
+                    <div class="icones"><img src="./assets/icon/forca.svg" class="icon forca">{{m.forca}}</div>
+                    <div class="icones"><img src="./assets/icon/vida.svg" class="icon vida">{{m.vida}}</div>
+                    <div class="icones"><img src="./assets/icon/raiva.svg" class="icon raiva">{{m.raiva}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="buttoncenter">
+            <button @click="iniciarGame()" class="btn new-game">Iniciar Jogo</button>
+          </div>
+        </div>
+
+        <div v-else>
+          <div class="batalha" v-if="jogador.animationOK && monstro.animationOK">
+            <div class="animation heroiAnimation">
+              <img :src="jogador.animation">
+            </div>
+            <div class="animation monstroAnimation">
+              <img :src="monstro.animation">
+            </div>
+          </div>        
+          <div class="botoes">
+            <button @click="attack(false)" class="btn attack">Ataque</button>
+            <button @click="attack(true)" class="btn especial-attack" :class="{disabled: jogador.mana == 0}"
+              :disabled="(jogador.mana == 0)">Ataque Especial</button>
+            <button @click="curaEdano()" class="btn cura" :class="{disabled: jogador.mana == 0}"
+              :disabled="(jogador.mana == 0)">Curar</button>
+            <button @click="suicidar()" class="btn give-up">Suicidar</button>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="resultado" class="panel result">
+        <div v-if="monstro.vida == 0" class="win">
+          <img v-if="jogador.animationOK" :src='"assets/sprite/"+jogador.nome+"/inicial.gif"' /><br>
+          Você ganhou!!! &#128515
+        </div>
+        <div v-else class="lose">
+          <img v-if="jogador.animationOK" :src='"assets/sprite/"+jogador.nome+"/dead.gif"' /><br>
+          Você perdeu! &#128542
+        </div>
+      </div>
+
+      <div id="logs" class="panel logs" v-if="logs.length">
+        <ul>
+          <li v-for="log in logs" :class="log.cls" class="log">{{ log.text }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+
+</html>
