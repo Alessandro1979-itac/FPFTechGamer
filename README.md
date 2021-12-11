@@ -6,6 +6,6 @@ Um jogo baseado em turnos, onde o jogador e um inimigo batalham até que os pont
 Onde os personagens e inimigos possuem algumas características:
 
 | Personagem | Anmago |
-|--- |--- |--- | |--- |
+| --- | --- | --- | --- |
 | Vida | Mana | Força | Especial |
 | 100 | 5 | 5 | 9 |
