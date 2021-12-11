@@ -157,7 +157,7 @@ html {
   padding: 3px 0px;
   font-weight: 600;
   font-size: 1.1rem;
-  text-transform: uppercase;
+  text-transform: lowercase;
   border-radius: 3px;
 }
 

@@ -20,7 +20,7 @@ new Vue({
         nome: 'Guerreiro',
         img: 'assets/person/guerreiro.jpg',
         animation: 'assets/sprite/Guerreiro/inicial.gif',
-        vida: 120,
+        vida: 100,
         mana: 4,
         forca: 8,
         especial: 5,
@@ -61,7 +61,7 @@ new Vue({
         nome: 'Troll',
         img: 'assets/person/troll.jpg',
         animation: 'assets/sprite/Troll/inicial.gif',
-        vida: 120,
+        vida: 100,
         raiva: 0,
         forca: 10,
       }
