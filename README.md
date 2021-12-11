@@ -5,7 +5,7 @@ Um jogo baseado em turnos, onde o jogador e um inimigo batalham até que os pont
 É um game baseado em turnos:
 Onde os personagens e inimigos possuem algumas características:
 
-| Personagem | Anmago |
+| Personagem | | Mago | |
 | --- | --- | --- | --- |
 | Vida | Mana | Força | Especial |
 | 100 | 5 | 5 | 9 |
